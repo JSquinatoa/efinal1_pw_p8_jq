@@ -26,7 +26,7 @@ const construirObjetoPokemon = async (id) => {
     let pokemon = await ObtenerPokemonAPI(id)
     const objetoPokemon = {
         nombre: pokemon.name,
-        id: pokemon.id
+        id: id
     }
 
     return objetoPokemon
@@ -45,12 +45,25 @@ const constuirArregloPokemon = async (vector) => {
 const obtenerPokemons = () => {
     let seleccionados = []
     for (let i = 0; i < 3; i++) {
-        seleccionados[i] = arregloPokemonsFijo(obtenerNumeroAletorio(0, arregloPokemonsFijo.length))        
+        let numero = obtenerNumeroAletorio(0, 3)        
+        seleccionados[i] = arregloPokemonsFijo[numero]     
     }
     return seleccionados
 }
 
+// Calcular el puntaje
+const obtenerPunaje = (vector) =>{
+    let puntaje = 0
+    const unicos = [...new Set(vector)]
+    if (unicos.length === 1) {
+        puntaje = 5        
+    } else if(unicos.length === 2) {
+        puntaje = 2
+    }
 
+    return puntaje
+    
+}
 
 // Funciones Fachada
 export const inciarVectorFijoFachada = () =>{
@@ -59,8 +72,14 @@ export const inciarVectorFijoFachada = () =>{
 
 
 export const obtenerPokemonsFachada = () => {
+    return obtenerPokemons()
+}
+
+export const obtenerPunajeFachada = (vector) =>{
+    return obtenerPunaje(vector)
 
 }
+
 
 
 
